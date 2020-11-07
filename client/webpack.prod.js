@@ -8,14 +8,22 @@ module.exports = {
     },
     devtool: 'source-map',
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css']
+        extensions: ['.js', '.jsx', '.json', '.css']
     },
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
+            },
+            {
+                test: /\.html$/,
+                use: "html-loader",
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/i,
+                use: "url-loader",
             },
             {enforce: "pre", test: /\.js$/, loader: "source-map-loader"},
             {

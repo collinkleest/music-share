@@ -4,21 +4,29 @@ const path = require('path'),
 
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: './src/index.js',
     output:{
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
     devtool: 'source-map',
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.css']
+        extensions: ['.js', '.jsx', '.json', '.css']
     },
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
+            },
+            {
+                test: /\.html$/,
+                use: "html-loader",
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/i,
+                use: "url-loader",
             },
             {enforce: "pre", test: /\.js$/, loader: "source-map-loader"},
             {
