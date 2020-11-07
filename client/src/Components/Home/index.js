@@ -1,11 +1,5 @@
 import React from "react";
+import {Home} from './Home';
 
-const Home = (props) =>{
-    return(
-        <h1>
-            MYHome 
-        </h1>
-    )
-}
 
 export {Home}; 
