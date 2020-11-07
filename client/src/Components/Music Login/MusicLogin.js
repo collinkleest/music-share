@@ -1,9 +1,8 @@
 import React from 'react';
-import './index.css';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
-const StyledA = styled.h1`
+const StyledA = styled.a`
     color: white;
     text-decoration: none;
 `
