@@ -143,6 +143,7 @@ app.use(express.static('../client/dist'));
 
 const saltRounds = 10;
 
+// verify username and password
 app.get("/api/users", async (req, res) => {
     let passWord = req.query.passWord;
     let userName = req.query.userName;
@@ -168,6 +169,7 @@ app.get("/api/users", async (req, res) => {
     });
 });
 
+// create user and hash password in DB
 app.post("/api/users", async (req, res) => {
     var password = req.body.passWord;
     bcrypt.hash(password, saltRounds, async (err, hash) => {
