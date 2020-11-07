@@ -13,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from "react-router-dom";
-import {Login} from '../../redux/reducers';
+import {LoginAction} from '../../redux/actions/authActions';
+import { connect } from 'react-redux';
+import axios from "axios";
 
 const mapStateToProps = (state) => {
     return {
@@ -21,18 +23,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -63,13 +54,15 @@ const LoginElement = (props) => {
   const logIn = (props) => {
       let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
       axios.get(API_HOST, {
-        userName: userName,
-        passWord: passWord
+        params:{
+          userName: userName,
+          passWord: passWord
+        }
       })
       .then(function (response) {
-        if (response.body.status == 'SUCCESS'){
-          props.dipatch(Login());
-        }
+        // if (response.body.status == 'SUCCESS'){
+          // props.dipatch(LoginAction());
+        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -140,9 +133,6 @@ const LoginElement = (props) => {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

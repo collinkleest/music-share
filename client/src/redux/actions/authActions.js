@@ -1,9 +1,9 @@
 
 
-export const logout = () => {
+export const LogoutAction = () => {
     return { type: 'LOGOUT'}
 }
 
-export const login = () => {
+export const LoginAction = () => {
   return { type: 'LOGIN' };
 };

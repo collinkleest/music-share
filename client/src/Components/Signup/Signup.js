@@ -53,8 +53,8 @@ export function SignUp() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [passWord, setPassword] = useState('');
+  const [emailAddress, setEmail] = useState('');
   const [userName, setUserName] = useState('');
 
    const signUp = (e) => {
@@ -62,8 +62,8 @@ export function SignUp() {
       axios.post(API_HOST, {
         firstName: firstName,
         lastName: lastName,
-        password: password,
-        email: email,
+        passWord: passWord,
+        emailAddress: emailAddress,
         userName: userName
       })
       .then(function (response) {
@@ -135,7 +135,7 @@ export function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
+                value={emailAddress}
                 onChange={e => setEmail(e.target.value)}
               />
             </Grid>
@@ -149,7 +149,7 @@ export function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
+                value={passWord}
                 onChange={e => setPassword(e.target.value)}
               />
             </Grid>
