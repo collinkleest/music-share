@@ -121,13 +121,35 @@ mongoose.connect(
 app.use(express.json());
 app.use(express.static('../client/dist'));
 
+const saltRounds = 10;
+
+app.get("/api/users", async (req, res) => {
+    var passWord = req.body.passWord;
+    var userName = req.body.userName;
+    await User.findOne({userName: userName}, function (err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            const match = await bcrypt.compare(passWord, doc.passWord);
+            if (match) {
+                res.redirect("/login");
+            } else {
+                //say incorrect password
+            }
+        }
+    });
+});
 
 app.post("/api/users", async (req, res) => {
-    await User.create({email: req.body.email,
-    password: req.body.password,
-    username: req.body.userName,
-    firstname: req.body.firstName,
-    lastname: req.body.lastName});
+    var password = req.body.password;
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        await User.create({email: req.body.email,
+        password: hash,
+        username: req.body.userName,
+        firstname: req.body.firstName,
+        lastname: req.body.lastName});
+    });
+
     res.send(JSON.stringify({
         wasSuccess: "YES",
     }))
