@@ -1,7 +1,7 @@
 import React from "react";
 import {HashRouter, Route} from "react-router-dom";
 import {Home} from './Home';
-import {Login} from './Login';
+import {SignIn} from './Login';
 import {Signup} from './Signup';
 
 export class App extends React.Component{
@@ -9,7 +9,7 @@ export class App extends React.Component{
     return (
       <HashRouter>
         <Route exact path="/">
-          <Login />
+          <SignIn />
         </Route>
         <Route path="/signup">
           <Signup />
