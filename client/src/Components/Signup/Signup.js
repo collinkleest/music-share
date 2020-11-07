@@ -58,7 +58,6 @@ export function SignUp() {
   const [userName, setUserName] = useState('');
 
    const signUp = (e) => {
-      console.log(process.env.NODE_ENV)
       let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
       axios.post(API_HOST, {
         firstName: firstName,

@@ -132,9 +132,14 @@ app.get("/api/users", async (req, res) => {
         } else {
             const match = await bcrypt.compare(passWord, doc.passWord);
             if (match) {
+                res.send(JSON.stringify({
+                  status: "SUCCESS"
+                }));
                 res.redirect("/login");
             } else {
-                //say incorrect password
+                res.send(JSON.stringify({
+                  status: "FAILURE"
+                }))
             }
         }
     });

@@ -13,6 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from "react-router-dom";
+import {Login} from '../../redux/reducers';
+
+const mapStateToProps = (state) => {
+    return {
+        loggedIn: state.loggedIn,
+    };
+};
 
 function Copyright() {
   return (
@@ -47,14 +54,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function SignIn() {
+const LoginElement = (props) => {
   const classes = useStyles();
 
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
 
-  const logIn = (e) => {
-
+  const logIn = (props) => {
+      let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
+      axios.get(API_HOST, {
+        userName: userName,
+        passWord: passWord
+      })
+      .then(function (response) {
+        if (response.body.status == 'SUCCESS'){
+          props.dipatch(Login());
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -103,7 +122,7 @@ export function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={logIn}
+            onClick={(props) => logIn(props)}
           >
             Sign In
           </Button>
@@ -127,3 +146,5 @@ export function SignIn() {
     </Container>
   );
 }
+
+export const Login = connect(mapStateToProps)(LoginElement);
