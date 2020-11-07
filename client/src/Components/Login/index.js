@@ -1,11 +1,3 @@
-import React from "react";
+import {SignIn} from './Login.js';
 
-const Login = (props) =>{
-    return(
-        <h1>
-            Login
-        </h1>
-    )
-}
-
-export {Login}; 
+export {SignIn}; 

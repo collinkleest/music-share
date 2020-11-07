@@ -1,18 +1,18 @@
 import React from "react";
 import {HashRouter, Route} from "react-router-dom";
 import {Home} from './Home';
-import {Login} from './Login';
-import {Signup} from './Signup';
+import {SignIn} from './Login';
+import {SignUp} from './Signup';
 
 export class App extends React.Component{
   render() {
     return (
       <HashRouter>
         <Route exact path="/">
-          <Login />
+          <SignIn />
         </Route>
         <Route path="/signup">
-          <Signup />
+          <SignUp />
         </Route>
         <Route path="/home">
           <Home />
