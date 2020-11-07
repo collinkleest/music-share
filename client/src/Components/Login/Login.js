@@ -16,7 +16,9 @@ import { Link } from "react-router-dom";
 import {LoginAction} from '../../redux/actions/authActions';
 import { connect } from 'react-redux';
 import axios from "axios";
-
+import { useHistory } from "react-router-dom";
+import { dispatch } from "react-redux";
+ 
 const mapStateToProps = (state) => {
     return {
         loggedIn: state.loggedIn,
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginElement = (props) => {
   const classes = useStyles();
-
+  const history = useHistory();
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
 
@@ -60,9 +62,10 @@ const LoginElement = (props) => {
         }
       })
       .then(function (response) {
-        // if (response.body.status == 'SUCCESS'){
-          // props.dipatch(LoginAction());
-        // }
+        if (response.data.status == 'SUCCESS'){
+          history.push('/music-login');
+          dispatch(LoginAction());
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -115,7 +118,7 @@ const LoginElement = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(props) => logIn(props)}
+            onClick={logIn}
           >
             Sign In
           </Button>

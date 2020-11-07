@@ -95,16 +95,17 @@ app.get('/callback', function(req, res) {
           var access_token = body.access_token,
               refresh_token = body.refresh_token;
   
-          var options = {
-            url: 'https://api.spotify.com/v1/me',
-            headers: { 'Authorization': 'Bearer ' + access_token },
-            json: true
-          };
+          res.redirect('/#/');
+          // var options = {
+          //   url: 'https://api.spotify.com/v1/me',
+          //   headers: { 'Authorization': 'Bearer ' + access_token },
+          //   json: true
+          // };
   
-          // use the access token to access the Spotify Web API
-          request.get(options, function(error, response, body) {
-            console.log(body);
-          });
+          // // use the access token to access the Spotify Web API
+          // request.get(options, function(error, response, body) {
+          //   console.log(body);
+          // });
   
           // we can also pass the token to the browser to make requests from there
         //   res.redirect('/#' +
@@ -147,13 +148,9 @@ app.get("/api/users", async (req, res) => {
         } else {
             const match = await bcrypt.compare(passWord, doc.passWord);
             if (match) {
-                res.header("Access-Control-Allow-Origin", "*");
-                res.header("Access-Control-Allow-Methods", "*");
-                res.header(
-                  "Access-Control-Allow-Headers",
-                  "Origin, X-Requested-With, Content-Type, Accept"
-                );
-                res.redirect("/#/music-login");
+                res.send(JSON.stringify({
+                  status: "SUCCESS"
+                }));
             } else {
                 res.send(JSON.stringify({
                   status: "FAILURE"
