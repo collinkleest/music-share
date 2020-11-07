@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
 export function SignIn() {
   const classes = useStyles();
 
+  const [userName, setUserName] = useState('');
+  const [passWord, setPassWord] = useState('');
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -70,6 +73,7 @@ export function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={userName}
           />
           <TextField
             variant="outlined"
@@ -87,7 +91,6 @@ export function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"

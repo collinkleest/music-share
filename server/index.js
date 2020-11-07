@@ -20,12 +20,11 @@ app.use(express.static('../client/dist'));
 
 
 app.post("/users", async (req, res) => {
-    
-    await User.create({email: "testemail@cs.com",
-    password: "bily",
-    username: "joesmo123",
-    firstname: "collin",
-    lastname: "kleest"});
+    await User.create({email: req.body.email,
+    password: req.body.password,
+    username: req.body.userName,
+    firstname: req.body.firstName,
+    lastname: req.body.lastName});
     res.send(JSON.stringify({
         wasSuccess: "YES",
     }))
