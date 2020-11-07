@@ -18,4 +18,5 @@ app.use(express.json());
 app.use(express.static('client/dist'));
 
 
-app.listen(APP_PORT, () => {console.log(`Trim.io API Started at port: ${APP_PORT}`)});
+
+app.listen(APP_PORT, () => {console.log(`Music-Share Backend is Running on: ${APP_PORT}`)});
