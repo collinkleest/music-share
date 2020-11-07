@@ -122,7 +122,7 @@ app.use(express.json());
 app.use(express.static('../client/dist'));
 
 
-app.post("/users", async (req, res) => {
+app.post("/api/users", async (req, res) => {
     await User.create({email: req.body.email,
     password: req.body.password,
     username: req.body.userName,

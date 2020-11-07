@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -52,6 +53,10 @@ export function SignIn() {
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
 
+  const logIn = (e) => {
+
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -68,12 +73,13 @@ export function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="User Name"
+            name="username"
+            autoComplete="username"
             autoFocus
             value={userName}
+            onChange={e => setUserName(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -84,6 +90,8 @@ export function SignIn() {
             label="Password"
             type="password"
             id="password"
+            value={passWord}
+            onChange={e => setPassWord(e.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -95,17 +103,18 @@ export function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={logIn}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="/forgot-password">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/signup">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

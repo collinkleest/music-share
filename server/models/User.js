@@ -1,23 +1,27 @@
 const mongoose = require('mongoose');
 
 const userEntitySchema = new mongoose.Schema({
-    email: {
+    firstName: {
         type: String,
         required: true
     },
-    password: {
+    lastName: {
         type: String,
         required: true
     },
-    username: {
+    userName: {
         type: String,
         required: true
     },
-    firstname: {
+    passWord: {
         type: String,
         required: true
     },
-    lastname: {
+    emailAddress: {
+        type: String,
+        required: true
+    },
+    isVerified: {
         type: String,
         required: true
     }
