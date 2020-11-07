@@ -4,11 +4,15 @@ import {Home} from './Home';
 import {Login} from './Login';
 import {SignUp} from './Signup';
 import {Password} from "./Password";
+import {MusicLogin} from "./Music Login";
 
 export class App extends React.Component{
   render() {
     return (
       <HashRouter>
+        <Route path="/music-login">
+          <MusicLogin />
+        </Route>
         <Route exact path="/">
           <Login />
         </Route>

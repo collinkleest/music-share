@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 var client_id = '2882143527a54613837f2945a468613d'; 
 var client_secret = '5077792527b94777b61f3d3485799b76';
-var redirect_uri = '/callback';
+var redirect_uri = 'http://localhost:5000/callback';
 
 
 // Start of AUTH
@@ -51,12 +51,6 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -159,7 +153,7 @@ app.get("/api/users", async (req, res) => {
                   "Access-Control-Allow-Headers",
                   "Origin, X-Requested-With, Content-Type, Accept"
                 );
-                res.redirect("/login");
+                res.redirect("/#/music-login");
             } else {
                 res.send(JSON.stringify({
                   status: "FAILURE"
