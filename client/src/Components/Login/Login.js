@@ -121,7 +121,7 @@ const LoginElement = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={logIn}
+            onClick={(props) => logIn(props)}
           >
             Sign In
           </Button>
