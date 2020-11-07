@@ -2,7 +2,7 @@ import React from "react";
 import {HashRouter, Route} from "react-router-dom";
 import {Home} from './Home';
 import {SignIn} from './Login';
-import {Signup} from './Signup';
+import {SignUp} from './Signup';
 
 export class App extends React.Component{
   render() {
@@ -12,7 +12,7 @@ export class App extends React.Component{
           <SignIn />
         </Route>
         <Route path="/signup">
-          <Signup />
+          <SignUp />
         </Route>
         <Route path="/home">
           <Home />

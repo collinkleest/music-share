@@ -12,7 +12,15 @@ const userEntitySchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
+    },
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
     }
 })
 
-modules.exports = mongoose.model("USERS", userEntitySchema);
+module.exports = mongoose.model("USERS", userEntitySchema);
