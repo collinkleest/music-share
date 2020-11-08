@@ -7,6 +7,7 @@ const app = express();
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const User = require('./models/User.js');
+const { readdirSync } = require("fs");
 require('dotenv').config();
 
 
@@ -178,5 +179,11 @@ app.post("/api/users", async (req, res) => {
         wasSuccess: "YES",
     }))
 }); 
+
+app.get("/api/users/:userName", async (req, res) => {
+  let userName = req.params.userName;
+  let foundUser = await User.exists({userName: userName});
+  res.send(foundUser);
+})
 
 app.listen(APP_PORT, () => {console.log(`Music-Share Backend is Running on: ${APP_PORT}`)});

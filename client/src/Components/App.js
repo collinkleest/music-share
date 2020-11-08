@@ -5,27 +5,30 @@ import {Login} from './Login';
 import {SignUp} from './Signup';
 import {Password} from "./Password";
 import {MusicLogin} from "./Music Login";
+import { withCookies } from 'react-cookie';
 
-export class App extends React.Component{
-  render() {
-    return (
-      <HashRouter>
-        <Route path="/music-login">
-          <MusicLogin />
-        </Route>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="/forgot-password">
-          <Password />
-        </Route>
-      </HashRouter>
+class App extends React.Component {
+  render(){
+      return (
+        <HashRouter>
+          <Route path="/music-login">
+            <MusicLogin cookies={this.props.cookies}/>
+          </Route>
+          <Route exact path="/">
+            <Login cookies={this.props.cookies}/>
+          </Route>
+          <Route path="/signup">
+            <SignUp cookies={this.props.cookies}/>
+          </Route>
+          <Route path="/home">
+            <Home cookies={this.props.cookies}/>
+          </Route>
+          <Route path="/forgot-password">
+            <Password cookies={this.props.cookies}/>
+          </Route>
+        </HashRouter>
     )
   }
 }
+
+export default withCookies(App);

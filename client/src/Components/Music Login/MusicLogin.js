@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
-
+import { connect } from 'react-redux';
 const StyledA = styled.a`
     color: white;
     text-decoration: none;
@@ -12,7 +12,16 @@ const StyledDiv = styled.div`
     text-align: center;
 `
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        loggedIn: state.loggedIn,
+        cookies: ownProps.cookies,
+    };
+};
+
 const MusicLogin = (props) => {
+    const { cookies } = props;
+    console.log(cookies.get('loggedIn'));
     return (
         <StyledDiv>
             <h1>
@@ -27,4 +36,4 @@ const MusicLogin = (props) => {
     )
 }
 
-export {MusicLogin}
+export default connect(mapStateToProps)(MusicLogin);

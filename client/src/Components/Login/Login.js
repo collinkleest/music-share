@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -16,16 +14,13 @@ import { connect } from 'react-redux';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { useCookies } from 'react-cookie';
-
  
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
         loggedIn: state.loggedIn,
+        cookies: ownProps.cookies,
     };
 };
-
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,13 +42,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginElement = (props) => {
+const Login = (props) => {
+  // react hooks
   const classes = useStyles();
   const history = useHistory();
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(['auth']);
+  const { cookies } = props;
 
   const logIn = () => {
       let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
@@ -67,7 +63,7 @@ const LoginElement = (props) => {
         if (response.data.status == 'SUCCESS'){
           history.push('/music-login');
           dispatch(LoginAction());
-          setCookie('loggedIn', true, { path: '/' });
+          cookies.set('loggedIn', true, { path: '/' });
         }
       })
       .catch(function (error) {
@@ -139,4 +135,4 @@ const LoginElement = (props) => {
   );
 }
 
-export const Login = connect(mapStateToProps)(LoginElement);
+export default connect(mapStateToProps)(Login);

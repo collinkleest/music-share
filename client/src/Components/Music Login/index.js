@@ -1,3 +1,3 @@
-import {MusicLogin} from './MusicLogin.js';
+import MusicLogin from './MusicLogin.js';
 
 export {MusicLogin}; 

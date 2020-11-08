@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,6 +11,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 import {Link} from "react-router-dom"; 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 
 function Copyright() {
   return (
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function SignUp() {
+export const SignUp = (props) => {
   const classes = useStyles();
 
   const [firstName, setFirstName] = useState('');
@@ -56,23 +57,65 @@ export function SignUp() {
   const [passWord, setPassword] = useState('');
   const [emailAddress, setEmail] = useState('');
   const [userName, setUserName] = useState('');
+  const [isEmptyFields, setIsEmptyFields] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isUserPresent, setIsUserPresent] = useState(false);
+
+  const checkBlankFields = () => {
+    if ((firstName.trim().length > 0) && (lastName.trim().length > 0) && 
+    (passWord.trim().length > 0) && (emailAddress.trim().length > 0) && (userName.trim().length > 0)){
+      setIsEmptyFields(false);
+      return true;
+    } else {
+      setIsEmptyFields(true);
+      return false;
+    }
+  }
+
+  const checkUserName = (userName) => {
+    axios.get("/api/users/"+userName)
+    .then((res) => {
+        if (res.data){
+          setIsUserPresent(true);
+          return true;
+        } else{
+          setIsUserPresent(false);
+          return false;
+        }
+    }).catch((err) => {
+      console.log(err);
+    })
+  } 
+
+  const validateEmail = (email) => {
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email)) {
+      setIsValidEmail(true);
+      return true;
+    } else {
+      setIsValidEmail(false);
+      return false;
+    }
+  }
 
    const signUp = (e) => {
       let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
-      axios.post(API_HOST, {
-        firstName: firstName,
-        lastName: lastName,
-        passWord: passWord,
-        emailAddress: emailAddress,
-        userName: userName
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+      if (checkBlankFields() && validateEmail(emailAddress) && !(checkUserName(userName))){
+        axios.post(API_HOST, {
+          firstName: firstName,
+          lastName: lastName, 
+          passWord: passWord,
+          emailAddress: emailAddress,
+          userName: userName
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -152,6 +195,11 @@ export function SignUp() {
                 value={passWord}
                 onChange={e => setPassword(e.target.value)}
               />
+            </Grid>
+            <Grid item xs={12}>
+              {isEmptyFields && <MuiAlert severity="error">All fields must be filled out</MuiAlert>}
+              {!(isValidEmail) && <MuiAlert severity="error">Email is not valid format</MuiAlert>}
+              {isUserPresent && <MuiAlert severity="error">User name is already taken, try a new one</MuiAlert>}
             </Grid>
           </Grid>
           <Button
