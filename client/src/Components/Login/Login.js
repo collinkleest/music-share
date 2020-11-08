@@ -52,7 +52,7 @@ const Login = (props) => {
   const { cookies } = props;
 
   const logIn = () => {
-      let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
+      let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/v1/users' : '/api/v1/users' 
       axios.get(API_HOST, {
         params:{
           userName: userName,
