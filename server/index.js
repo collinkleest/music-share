@@ -97,17 +97,7 @@ app.get('/callback', function(req, res) {
               refresh_token = body.refresh_token;
   
           res.redirect('/#/home?token='+access_token);
-          // var options = {
-          //   url: 'https://api.spotify.com/v1/me',
-          //   headers: { 'Authorization': 'Bearer ' + access_token },
-          //   json: true
-          // };
-  
-          // // use the access token to access the Spotify Web API
-          // request.get(options, function(error, response, body) {
-          //   console.log(body);
-          // });
-  
+
           // we can also pass the token to the browser to make requests from there
         //   res.redirect('/#' +
         //     querystring.stringify({
@@ -180,6 +170,7 @@ app.post("/api/v1/users", async (req, res) => {
     }))
 }); 
 
+// checks for valid user name and email
 app.get("/api/v1/users/usercheck", async (req, res) => {
   let userName = req.query.userName;
   let foundUserName = await User.exists({userName: userName});
