@@ -1,9 +1,17 @@
+import {SPOTIFY, LOGIN, LOGOUT} from "../constants/index";
 
-
-export const LogoutAction = () => {
-    return { type: 'LOGOUT'}
+const LogoutAction = () => {
+    return { type: LOGOUT}
 }
 
-export const LoginAction = () => {
-  return { type: 'LOGIN' };
+const LoginAction = () => {
+  return { type: LOGIN };
 };
+
+const getSpotifyToken = (payload) => {
+  return {
+    type: SPOTIFY,
+    payload: payload,
+  }
+}
+export {LogoutAction, getSpotifyToken, LoginAction}
