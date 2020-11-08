@@ -180,10 +180,15 @@ app.post("/api/v1/users", async (req, res) => {
     }))
 }); 
 
-app.get("/api/v1/users/:userName", async (req, res) => {
-  let userName = req.params.userName;
-  let foundUser = await User.exists({userName: userName});
-  res.send(foundUser);
+app.get("/api/v1/users/usercheck", async (req, res) => {
+  let userName = req.query.userName;
+  let foundUserName = await User.exists({userName: userName});
+  let emailAddress = req.query.emailAddress;
+  let foundEmail = await User.exists({emailAddress: emailAddress});
+  res.send(JSON.stringify({
+      foundUserName: foundUserName,
+      foundEmail: foundEmail
+  }));
 })
 
 app.listen(APP_PORT, () => {console.log(`Music-Share Backend is Running on: ${APP_PORT}`)});

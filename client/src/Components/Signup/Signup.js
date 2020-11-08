@@ -59,6 +59,7 @@ export const SignUp = (props) => {
   const [userName, setUserName] = useState('');
   const [isEmptyFields, setIsEmptyFields] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [emailExists, setEmailExists] = useState(false);
   const [userNameExists, setUserNameExists] = useState(false);
 
   const DEV_URI = (process.env.NODE_ENV == "development") ? 'http://localhost:5000' : ''
@@ -74,16 +75,26 @@ export const SignUp = (props) => {
     }
   }
 
-  const checkUserName = (userName) => {
-    axios.get(`${DEV_URI}/api/v1/users/${userName}`)
-    .then((res) => {
-        if (res.data == true){
+  const checkUserNameAndEmail = (userName, emailAddress) => {
+    axios.get(`${DEV_URI}/api/v1/users/usercheck/?userName=${userName}&emailAddress=${emailAddress}`)
+    .then((res) => { 
+        let userName = false;
+        let email = false;
+        if (res.data.foundUserName == true){
           setUserNameExists(true);
-          return true;
+          userName = true;
         } else {
-          setUserNameExists (false);
-          return false;
+          setUserNameExists(false);
+          userName = false;
         }
+        if (res.data.foundEmail == true){
+          setEmailExists(true);
+          email = true;
+        } else {
+          setEmailExists(false);
+          email = false;
+        }
+        return (userName && email);
     }).catch((err) => {
       console.log(err);
     })
@@ -101,7 +112,8 @@ export const SignUp = (props) => {
   }
 
    const signUp = (e) => {
-      if (checkBlankFields() && validateEmail(emailAddress) && (checkUserName(userName) == false)){
+      if (checkBlankFields() && validateEmail(emailAddress) 
+      && (checkUserNameAndEmail(userName, emailAddress) == false)) {
         axios.post(`${DEV_URI}/api/v1/users/`, {
           firstName: firstName,
           lastName: lastName, 
@@ -200,6 +212,7 @@ export const SignUp = (props) => {
             <Grid item xs={12}>
               {isEmptyFields && <MuiAlert severity="error">All fields must be filled out</MuiAlert>}
               {!(isValidEmail) && <MuiAlert severity="error">Email is not valid format</MuiAlert>}
+              {emailExists && <MuiAlert severity="error">There is already an account using that email address</MuiAlert>}
               {userNameExists && <MuiAlert severity="error">User name is already taken</MuiAlert>}
             </Grid>
           </Grid>
