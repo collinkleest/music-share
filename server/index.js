@@ -140,7 +140,7 @@ app.use(express.static('../client/dist'));
 const saltRounds = 10;
 
 // verify username and password
-app.get("/api/users", async (req, res) => {
+app.get("/api/v1/users", async (req, res) => {
     let passWord = req.query.passWord;
     let userName = req.query.userName;
     await User.findOne({userName: userName}, async (err, doc) => {
@@ -162,7 +162,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 // create user and hash password in DB
-app.post("/api/users", async (req, res) => {
+app.post("/api/v1/users", async (req, res) => {
     var password = req.body.passWord;
     bcrypt.hash(password, saltRounds, async (err, hash) => {
         await User.create({
@@ -180,7 +180,7 @@ app.post("/api/users", async (req, res) => {
     }))
 }); 
 
-app.get("/api/users/:userName", async (req, res) => {
+app.get("/api/v1/users/:userName", async (req, res) => {
   let userName = req.params.userName;
   let foundUser = await User.exists({userName: userName});
   res.send(foundUser);

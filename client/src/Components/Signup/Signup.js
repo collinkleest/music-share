@@ -59,7 +59,9 @@ export const SignUp = (props) => {
   const [userName, setUserName] = useState('');
   const [isEmptyFields, setIsEmptyFields] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [isUserPresent, setIsUserPresent] = useState(false);
+  const [userNameExists, setUserNameExists] = useState(false);
+
+  const DEV_URI = (process.env.NODE_ENV == "development") ? 'http://localhost:5000' : ''
 
   const checkBlankFields = () => {
     if ((firstName.trim().length > 0) && (lastName.trim().length > 0) && 
@@ -73,13 +75,13 @@ export const SignUp = (props) => {
   }
 
   const checkUserName = (userName) => {
-    axios.get("/api/users/"+userName)
+    axios.get(`${DEV_URI}/api/v1/users/${userName}`)
     .then((res) => {
-        if (res.data){
-          setIsUserPresent(true);
+        if (res.data == true){
+          setUserNameExists(true);
           return true;
-        } else{
-          setIsUserPresent(false);
+        } else {
+          setUserNameExists (false);
           return false;
         }
     }).catch((err) => {
@@ -99,9 +101,8 @@ export const SignUp = (props) => {
   }
 
    const signUp = (e) => {
-      let API_HOST = (process.env.NODE_ENV == "development") ? 'http://localhost:5000/api/users' : '/api/users' 
-      if (checkBlankFields() && validateEmail(emailAddress) && !(checkUserName(userName))){
-        axios.post(API_HOST, {
+      if (checkBlankFields() && validateEmail(emailAddress) && (checkUserName(userName) == false)){
+        axios.post(`${DEV_URI}/api/v1/users/`, {
           firstName: firstName,
           lastName: lastName, 
           passWord: passWord,
@@ -199,7 +200,7 @@ export const SignUp = (props) => {
             <Grid item xs={12}>
               {isEmptyFields && <MuiAlert severity="error">All fields must be filled out</MuiAlert>}
               {!(isValidEmail) && <MuiAlert severity="error">Email is not valid format</MuiAlert>}
-              {isUserPresent && <MuiAlert severity="error">User name is already taken, try a new one</MuiAlert>}
+              {userNameExists && <MuiAlert severity="error">User name is already taken</MuiAlert>}
             </Grid>
           </Grid>
           <Button
