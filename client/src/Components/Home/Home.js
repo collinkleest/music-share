@@ -6,7 +6,9 @@ import { connect, useDispatch } from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { SpotifyApiContext, Artist } from 'react-spotify-api';
+import axios from 'axios';
+
+
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -31,14 +33,24 @@ const Home = (props) => {
         }
     }, []);
 
-
+    const sendEmail = async () => {
+        console.log("inside");
+        axios.get('http://localhost:5000/api/v1/users/email')
+        .then( (res) => {
+            console.log("api  triggered!!");
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+        console.log("underrrr")
+    }
     
     return (
         <div>
             <Grid container justify="center" alignitems="center" spacing={3}>
                 <Grid item xs={3}>
                     <TextField id="standard-basic" label="Standard" onChange={(e) => {setSearchValue(e.target.value)}}/>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={sendEmail}>
                         Search
                     </Button>
                 </Grid>

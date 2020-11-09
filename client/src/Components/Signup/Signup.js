@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import axios from "axios";
 import {Link} from "react-router-dom"; 
 import MuiAlert from '@material-ui/lab/Alert';
+import Recaptcha from "react-recaptcha";
 
 
 function Copyright() {
@@ -110,6 +111,10 @@ export const SignUp = (props) => {
     }
   }
 
+  const verifyCallback = () => {
+    console.log("this g real");
+  }
+
    const signUp = (e) => {
       if (checkBlankFields() && validateEmail(emailAddress) 
       && (checkUserNameAndEmail(userName, emailAddress) == false)) {
@@ -145,9 +150,9 @@ export const SignUp = (props) => {
               <TextField
                 autoComplete="fname"
                 name="firstName"
-                variant="outlined"
                 required
                 fullWidth
+                variant="outlined"
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -157,10 +162,10 @@ export const SignUp = (props) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                variant="outlined"
                 required
                 fullWidth
                 id="lastName"
+                variant="outlined"
                 label="Last Name"
                 name="lastName"
                 value={lastName}
@@ -170,12 +175,12 @@ export const SignUp = (props) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
                 required
                 fullWidth
                 id="username"
                 label="User Name"
                 name="username"
+                variant="outlined"
                 autoComplete="username"
                 value={userName}
                 onChange={e => setUserName(e.target.value)}
@@ -206,6 +211,14 @@ export const SignUp = (props) => {
                 autoComplete="current-password"
                 value={passWord}
                 onChange={e => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>  
+              <Recaptcha
+                sitekey="6Le5vuAZAAAAAAzKqeXGkaMYEbRE0mSlu0q1CG7n"
+                render="explicit"
+                size="normal"
+                verifyCallback={verifyCallback}
               />
             </Grid>
             <Grid item xs={12}>

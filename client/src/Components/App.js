@@ -8,7 +8,6 @@ import {MusicLogin} from "./Music Login";
 import { withCookies } from 'react-cookie';
 import { SpotifyApiContext } from 'react-spotify-api';
 import {connect} from "react-redux";
-import compose from "recompose/compose";
 
 const mapStateToProps = (state, ownProps) => {
     return {
