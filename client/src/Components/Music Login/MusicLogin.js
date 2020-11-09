@@ -27,9 +27,19 @@ const MusicLogin = (props) => {
             <h1>
                 Select a streaming provider to login with
             </h1>
-            <StyledA href='/login'>
+            <StyledA href='/api/v1/spotify/login'>
                 <Button variant="contained" color="primary">
                     Login with Spotify
+                </Button>
+            </StyledA>
+            <StyledA href='#'>
+                <Button variant="contained" color="primary">
+                    Login with Soundcloud
+                </Button>
+            </StyledA>
+            <StyledA href='#'>
+                <Button variant="contained" color="primary">
+                    Login with Apple Music
                 </Button>
             </StyledA>
         </StyledDiv> 
