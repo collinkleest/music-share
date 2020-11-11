@@ -6,7 +6,6 @@ import {SignUp} from './Signup';
 import {Password} from "./Password";
 import {MusicLogin} from "./Music Login";
 import { withCookies } from 'react-cookie';
-import { SpotifyApiContext } from 'react-spotify-api';
 import {connect} from "react-redux";
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,7 +19,6 @@ const mapStateToProps = (state, ownProps) => {
 class App extends React.Component {
   render(){
       return (
-        <SpotifyApiContext.Provider value={this.props.spotifyToken}>
           <HashRouter>
             <Route path="/music-login">
               <MusicLogin cookies={this.props.cookies}/>
@@ -38,7 +36,6 @@ class App extends React.Component {
               <Password cookies={this.props.cookies}/>
             </Route>
         </HashRouter>
-        </SpotifyApiContext.Provider>
     )
   }
 }
