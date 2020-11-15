@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID; 
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-var redirect_uri = '/api/v1/spotify/callback';
+var redirect_uri = 'http://localhost:5000/api/v1/spotify/callback';
 
 var generateRandomString = function(length) {
     var text = '';

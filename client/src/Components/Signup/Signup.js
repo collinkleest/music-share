@@ -75,6 +75,10 @@ export const SignUp = (props) => {
     }
   }
 
+  const returnUnameEmail = (userName, email) => {
+    return (userName && email);
+  }
+
   const checkUserNameAndEmail = (userName, emailAddress) => {
     axios.get(`${DEV_URI}/api/v1/users/usercheck/?userName=${userName}&emailAddress=${emailAddress}`)
     .then((res) => { 
@@ -94,7 +98,8 @@ export const SignUp = (props) => {
           setEmailExists(false);
           email = false;
         }
-        return (userName && email);
+        
+        setTimeout(returnUnameEmail(userName,email), 5000);
     }).catch((err) => {
       console.log(err);
     })
@@ -116,6 +121,7 @@ export const SignUp = (props) => {
   }
 
    const signUp = (e) => {
+      console.log("checkUsername and email: " + checkUserNameAndEmail(userName, emailAddress));
       if (checkBlankFields() && validateEmail(emailAddress) 
       && (checkUserNameAndEmail(userName, emailAddress) == false)) {
         axios.post(`${DEV_URI}/api/v1/users/`, {
